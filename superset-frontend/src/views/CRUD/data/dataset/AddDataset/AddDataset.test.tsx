@@ -17,17 +17,28 @@
  * under the License.
  */
 import React from 'react';
-import { render, screen } from 'spec/helpers/testing-library';
+import { render, screen, act } from 'spec/helpers/testing-library';
 import AddDataset from 'src/views/CRUD/data/dataset/AddDataset';
 
 describe('AddDataset', () => {
-  it('renders a blank state AddDataset', () => {
-    render(<AddDataset />);
+  const renderAndWait = async () => {
+    const mounted = act(async () => {
+      render(<AddDataset />);
+    });
+
+    return mounted;
+  };
+  it('renders a blank state AddDataset', async () => {
+    await renderAndWait();
 
     const blankeStateImgs = screen.getAllByRole('img', { name: /empty/i });
 
     // Header
-    expect(screen.getByText(/header/i)).toBeVisible();
+    expect(
+      screen.getByRole('textbox', {
+        name: /dataset name/i,
+      }),
+    ).toBeVisible();
     // Left panel
     expect(blankeStateImgs[0]).toBeVisible();
     expect(screen.getByText(/no database tables found/i)).toBeVisible();
