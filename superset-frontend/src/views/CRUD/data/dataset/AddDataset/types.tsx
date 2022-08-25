@@ -34,7 +34,7 @@ export interface DatasetObject {
   table_name?: string | null;
 }
 
-interface DatasetReducerPayloadType {
+export interface DatasetReducerPayloadType {
   name: string;
   value?: string;
 }

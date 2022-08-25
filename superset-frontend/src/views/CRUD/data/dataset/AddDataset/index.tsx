@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import React from 'react';
+import React, { useReducer, Reducer } from 'react';
 import Header from './Header';
 import DatasetPanel from './DatasetPanel';
 import LeftPanel from './LeftPanel';
@@ -61,15 +61,17 @@ export function datasetReducer(
 }
 
 export default function AddDataset() {
-  // this is commented out for now, but can be commented in as the component
-  // is built up. Uncomment the useReducer in imports too
-  // const [dataset, setDataset] = useReducer<
-  //   Reducer<Partial<DatasetObject> | null, DSReducerActionType>
-  // >(datasetReducer, null);
+  const [dataset, setDataset] = useReducer<
+    Reducer<Partial<DatasetObject> | null, DSReducerActionType>
+  >(datasetReducer, null);
+
+  const HeaderComponent = () => (
+    <Header setDataset={setDataset} datasetName={dataset?.dataset_name ?? ''} />
+  );
 
   return (
     <DatasetLayout
-      header={Header()}
+      header={HeaderComponent()}
       leftPanel={LeftPanel()}
       datasetPanel={DatasetPanel()}
       footer={Footer()}
